@@ -41,7 +41,7 @@
     }
 
     div#pacman{
-      /* background: url('img/pacman.gif'); */
+      background: url('img/pacman.gif');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
@@ -60,25 +60,31 @@
       position: absolute;
     }
 
-    div#score{
+    #puntajes{
       border: 1px solid white;
       width: 498px;
-      height: 40px;
+      height: 80px;
       color: white;
       text-align: center;
       position: absolute;
       top: 400px;
       left: 0px;
+      padding-top: 40px;
     }
+
+
   </style>
 </head>
 <body>
 
   <div id="container">
     <div id="world"></div>
-    <div id="pacman" style= "background-image: url('img/pacman.gif');"></div>
-    <div id="score"></div>
+    <div id="pacman"></div>
     <div id="ghost"></div>
+    <div id="puntajes">
+      <div id="score"></div>
+      <div id="lifes"></div>
+    </div>
   </div>
 
   <script>
@@ -125,16 +131,12 @@
       x: 0,
       y: 1
     };
-
     var ghost = {
       x: 13,
       y: 2
     };
-
     var score = 0;
-
     var lifes = 3;
-
     var grados = 0;
 
     function displayWorld(){
@@ -172,13 +174,11 @@
       document.getElementById('ghost').style.top = ghost.y*20+"px"
     }
 
+    displayGhost();
+
     displayWorld();
     displayPacman();
-
-
-    
-
-    
+   
     document.onkeydown = function(tecla){
       if(tecla.keyCode == 39 && world[pacman.y][pacman.x+1] != 2){   
         grados = 0;     
@@ -205,16 +205,28 @@
       if(world[pacman.y][pacman.x]==3){
         world[pacman.y][pacman.x]=0;
         score += 50;
+      } 
+      if(world[pacman.y][pacman.x]==world[ghost.y][ghost.x]){
+        lifes--;
+
       }  
+
       displayWorld();
       displayScore();
+      displayLifes();
     }
-    displayGhost();
+
+    
 
     function displayScore(){
-      document.getElementById('score').innerHTML = score;
+      document.getElementById('score').innerHTML = "PUNTAJE"+": "+score;
     }
     displayScore();
+
+    function displayLifes(){
+      document.getElementById('lifes').innerHTML = "VIDAS"+": "+lifes;
+    }
+    displayLifes();
 
 
   </script>
